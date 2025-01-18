@@ -22,8 +22,6 @@ function AbsenceForm() {
   const [date, setDate] = useState<string>("");
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
-  const [motif, setMotif] = useState<string>("");
-  const [proof, setProof] = useState<string>("");
 
   const [selectedSemestre, setSelectedSemestre] = useState<Semestre | null>(null);
   const [selectedFiliere, setSelectedFiliere] = useState<string | null>(null);
@@ -65,12 +63,12 @@ function AbsenceForm() {
   useEffect(() => {
     setStudents([]);
     const getStudents = async () => {
-      console.log(
+      /* console.log(
         "student:",
         selectedModule,
         selectedFiliere,
         selectedSemestre
-      );
+      ); */
       if (selectedFiliere && selectedModule && selectedSemestre) {
         try {
           const fetchedStudents = await getStudentsByFiliereAndModule(
@@ -163,8 +161,8 @@ function AbsenceForm() {
 
     const absences: Absence[] = selectedStudents.map((cne) => ({
       date,
-      motif: motif || null,
-      proof: proof || null,
+      motif:  null,
+      proof:  null,
       student: { cne },
       element: { elementId },
       startTime,
@@ -177,8 +175,6 @@ function AbsenceForm() {
       setDate("");
       setStartTime("");
       setEndTime("");
-      setMotif("");
-      setProof("");
       setSelectedStudents([]);
       setSelectedElement(null);
     } catch (error) {
@@ -219,24 +215,7 @@ function AbsenceForm() {
           required
         />
       </div>
-      <div>
-        <label htmlFor="motif">Motif:</label>
-        <input
-          type="text"
-          id="motif"
-          value={motif}
-          onChange={(e) => setMotif(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="proof">Preuve:</label>
-        <input
-          type="text"
-          id="proof"
-          value={proof}
-          onChange={(e) => setProof(e.target.value)}
-        />
-      </div>
+      
       <div>
         <label>Semestre:</label>
         <select
