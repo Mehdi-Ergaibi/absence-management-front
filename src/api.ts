@@ -138,3 +138,28 @@ export async function uploadProof(
     throw new Error("An unknown error occurred.");
   }
 }
+export const getAbsenceSummaryByFiliere = async (
+  filierName: string| null,
+  semestre: Semestre| null,
+  type: string
+) => {
+  const apiUrl = `${lhost}/api/absences/filiere/${filierName}/bilan?semestre=${semestre}&type=${type}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Absence Summary:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching absence summary:", error);
+    return [];
+  }
+};
